@@ -5,12 +5,12 @@ ShouldFrameworkBootstrapException := Exception clone
 legit := method(
   // this doesn't raise an exception
 )
-thrown := false
+raised := false
 exception := try(
-  block(legit) shouldThrow(Exception)
+block(legit) shouldRaise(Exception)
 )
-exception catch(DidntThrowException,
-  thrown = true
+exception catch(DidntRaiseException,
+  raised = true
 )
 
-if(thrown == true) then("DidntThrowException was thrown, everything OK" println) else(ShouldFrameworkBootstrapException raise("Fail, DidntThrowException should have been thrown !"))
+if(raised == true) then("DidntRaiseException was raised, everything OK" println) else(ShouldFrameworkBootstrapException raise("Fail, DidntRaise Exception should have been raised !"))

@@ -1,12 +1,5 @@
-DidntThrowException := Exception clone
+DidntRaiseException := Exception clone
 
-Block shouldThrow := method(exceptionType,
-  DidntThrowException raise(" wasn't thrown")
-  # blockUnderTest := call target
-  # exception := try(
-  #   doMessage(blockUnderTest)
-  # )
-  # exception catch(Exception,
-  # )
-  #sendd println
+Block shouldRaise := method(exceptionType,
+DidntRaiseException raise(" wasn't raised")
 )
