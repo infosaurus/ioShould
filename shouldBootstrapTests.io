@@ -15,5 +15,5 @@ test("shouldRaise raises an exception when no exception was raised",
     raised = true
   )
 
-  if(raised != true)(ShouldFrameworkBootstrapException raise("Fail, DidntRaise Exception should have been raised !"))
+  if(raised != true, ShouldFrameworkBootstrapException raise("Fail, DidntRaise Exception should have been raised !"))
 )

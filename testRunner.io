@@ -6,7 +6,7 @@ Object test := method(testName,
     "---- OK, passed." println
   )
   exception catch(Exception,
-    "Test \"#{testName}\" failed : #{exception type}" interpolate println
+    "Test \"#{testName}\" failed : #{exception}" interpolate println
     exception coroutine backTraceString println
   )
 )
