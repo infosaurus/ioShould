@@ -5,6 +5,7 @@ ShouldFrameworkBootstrapException := Exception clone
 
 test("shouldRaise raises an exception when no exception was raised",
   legit := method(
+    "in legit" println
     # this doesn't raise an exception
   )
   raised := false
@@ -16,4 +17,21 @@ test("shouldRaise raises an exception when no exception was raised",
   )
 
   if(raised != true, ShouldFrameworkBootstrapException raise("Fail, DidntRaise Exception should have been raised !"))
+)
+
+test("shouldRaise doesn't raise an exception if the exception was raised",
+  SpecificException := Exception clone
+  bugged := method(
+    "in bugged" println
+    SpecificException raise
+  )
+  raised := false
+  exception := try(
+    block(bugged) shouldRaise(SpecificException)
+  )
+  exception catch(DidntRaiseException,
+    raised = true
+  )
+
+  if(raised != false, ShouldFrameworkBootstrapException raise("Fail, DidntRaise Exception shouldn't have been raised !"))
 )
