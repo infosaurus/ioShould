@@ -1,16 +1,19 @@
 doFile("should.io")
+doFile("testRunner.io")
 
 ShouldFrameworkBootstrapException := Exception clone
 
-legit := method(
-  // this doesn't raise an exception
-)
-raised := false
-exception := try(
-block(legit) shouldRaise(Exception)
-)
-exception catch(DidntRaiseException,
-  raised = true
-)
+test("shouldRaise raises an exception when no exception was raised",
+  legit := method(
+    # this doesn't raise an exception
+  )
+  raised := false
+  exception := try(
+    block(legit) shouldRaise(Exception)
+  )
+  exception catch(DidntRaiseException,
+    raised = true
+  )
 
-if(raised == true) then("DidntRaiseException was raised, everything OK" println) else(ShouldFrameworkBootstrapException raise("Fail, DidntRaise Exception should have been raised !"))
+  if(raised != true)(ShouldFrameworkBootstrapException raise("Fail, DidntRaise Exception should have been raised !"))
+)
