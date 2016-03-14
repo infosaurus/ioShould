@@ -1,12 +1,16 @@
 Object test := method(testName,
   exception := try(
-  codeUnderTest := call message argAt(1)
-  call sender doMessage(codeUnderTest)
-    "\"#{testName}\"" interpolate println
-    "---- OK, passed." println
+    "" println
+    "Test : \"#{testName}\"" interpolate println
+    "------------------" println
+    codeUnderTest := call message argAt(1)
+    call sender doMessage(codeUnderTest)
+    "OK, passed." println
+    "" println
   )
   exception catch(Exception,
-    "Test \"#{testName}\" failed : #{exception}" interpolate println
+    "FAILED : #{exception type}" interpolate println
+    exception error println
     exception coroutine backTraceString println
   )
 )
