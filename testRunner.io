@@ -1,23 +1,28 @@
+doFile("testSuite.io")
+
 Object passedCount := 0
 Object failedCount := 0
 
 Object suite := method(
-  codeUnderTest := call message argAt(0)
-  call sender doMessage(codeUnderTest)
-  printSuiteResults(passedCount, failedCount)
+  testSuiteCode := call message argAt(0)
+  callingContext := call sender
+  self currentTestSuite := TestSuite clone init(testSuiteCode, callingContext)
+  self currentTestSuite run
+  printSuiteResults(self currentTestSuite passedCount, self currentTestSuite failedCount)
 )
 
 Object test := method(testName,
-  exception := try(
-    printTestHeader(testName)
-    codeUnderTest := call message argAt(1)
-    call sender doMessage(codeUnderTest)
-    passedCount = passedCount + 1
+  codeUnderTest := call message argAt(1)
+  callingContext := call sender
+  testCase := TestCase clone init(testName, codeUnderTest, callingContext)
+  printTestHeader(testCase name)
+  testCase run
+  if(testCase exception == nil) then (
+    self currentTestSuite passedCount = self currentTestSuite passedCount + 1
     printSuccess
-  )
-  exception catch(Exception,
-    failedCount = failedCount + 1
-    printFailure(exception)
+  ) else (
+    self currentTestSuite failedCount = self currentTestSuite failedCount + 1
+    printFailure(testCase exception)
   )
 )
 

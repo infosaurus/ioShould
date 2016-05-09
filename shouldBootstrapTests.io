@@ -61,7 +61,7 @@ suite (
     )
     raised := false
     exception := try(
-    block(bugged) shouldRaise(SpecificException, exceptionMessage)
+      block(bugged) shouldRaise(SpecificException, exceptionMessage)
     )
     exception catch(DidntRaiseException,
       raised = true
