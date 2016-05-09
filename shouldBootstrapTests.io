@@ -87,4 +87,15 @@ suite (
     actual shouldEqual(expected)
   )
 
+  test("shouldNotEqual raises an exception when expected and actual are equal",
+    expected := actual := list(1,2,3)
+    block( actual shouldNotEqual(expected) ) shouldRaise(EqualException, "#{expected} is equal to #{actual}" interpolate)
+  )
+
+  test("shouldNotEqual doesn't raise an exception when expected and actual are not equal",
+    expected := true
+    actual := "something"
+    actual shouldNotEqual(expected)
+  )
+
 )
