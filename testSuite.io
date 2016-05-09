@@ -20,12 +20,14 @@ TestSuite incrementFailed := method(
 )
 
 TestCase := Object clone
+TestCase suite := nil
 TestCase name := ""
 TestCase codeUnderTest := nil
 TestCase callingContext := nil
 TestCase exception := nil
 
-TestCase init := method(testName, codeUnderTest, callingContext
+TestCase init := method(suite, testName, codeUnderTest, callingContext
+  self suite := suite
   self name = testName
   self codeUnderTest = codeUnderTest
   self callingContext = callingContext
@@ -34,8 +36,10 @@ TestCase init := method(testName, codeUnderTest, callingContext
 TestCase run := method(
   exception := try(
     callingContext doMessage(codeUnderTest)
+    suite incrementPassed
   )
   exception catch(Exception,
     self exception = exception
+    suite incrementFailed
   )
 )

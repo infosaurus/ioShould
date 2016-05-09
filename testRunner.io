@@ -14,14 +14,12 @@ Object suite := method(
 Object test := method(testName,
   codeUnderTest := call message argAt(1)
   callingContext := call sender
-  testCase := TestCase clone init(testName, codeUnderTest, callingContext)
+  testCase := TestCase clone init(self currentTestSuite, testName, codeUnderTest, callingContext)
   printTestHeader(testCase name)
   testCase run
   if(testCase exception == nil) then (
-    self currentTestSuite incrementPassed
     printSuccess
   ) else (
-    self currentTestSuite incrementFailed
     printFailure(testCase exception)
   )
 )
