@@ -1,43 +1,24 @@
 doFile("testSuite.io")
+doFile("testOutput.io")
 
 Object suite := method(
+  self currentTestOutput := ConsoleTestOutput clone
   testSuiteCode := call message argAt(0)
   callingContext := call sender
   self currentTestSuite := TestSuite clone init(testSuiteCode, callingContext)
   self currentTestSuite run
-  printSuiteResults(self currentTestSuite passedCount, self currentTestSuite failedCount)
+self currentTestOutput outputSuiteResults(self currentTestSuite passedCount, self currentTestSuite failedCount)
 )
 
 Object test := method(testName,
   codeUnderTest := call message argAt(1)
   callingContext := call sender
   testCase := TestCase clone init(self currentTestSuite, testName, codeUnderTest, callingContext)
-  printTestHeader(testCase name)
+self currentTestOutput outputTestHeader(testCase name)
   exception := testCase run
   if(exception == nil) then (
-    printSuccess
+    self currentTestOutput outputSuccess
   ) else (
-    printFailure(exception)
+  self currentTestOutput outputFailure(exception)
   )
-)
-
-printTestHeader := method(testName,
-  "" println
-  "Test : \"#{testName}\"" interpolate println
-  "------------------" println
-)
-
-printSuccess := method(
-  "OK, passed." println
-  "" println
-)
-
-printFailure := method(exception,
-  "FAILED : #{exception type}" interpolate println
-  exception coroutine backTraceString println
-)
-
-printSuiteResults := method(passedCount, failedCount,
-  "" println
-  "Tests : #{passedCount} passed, #{failedCount} failed." interpolate println
 )
