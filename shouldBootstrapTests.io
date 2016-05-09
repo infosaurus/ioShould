@@ -70,4 +70,10 @@ suite (
     if(raised != false, ShouldFrameworkBootstrapException raise("Fail, DidntRaise Exception shouldn't have been raised because the message matched !"))
   )
 
+  test("shouldEqual raises an exception when expected and actual are not equal",
+    expected := 1
+    actual := 2
+    block( actual shouldEqual(expected) ) shouldRaise(WasNotEqualException, "#{expected} is not equal to #{actual}" interpolate)
+  )
+
 )

@@ -1,13 +1,22 @@
 DidntRaiseException := Exception clone
+WasNotEqualException := Exception clone
 
-Block shouldRaise := method(exceptionType, exceptionMessage,
+Block shouldRaise := method(exceptionType, expectedMessage,
   exception := try(self call)
   raised := false
-  message := nil
-  exception catch(exceptionType,
+  capturedMessage := nil
+  otherException := exception catch(exceptionType,
     raised = true
-    message := exception error
+    capturedMessage := exception error
   )
-  if(raised == false, DidntRaiseException raise(" wasn't raised"))
-  if (message != exceptionMessage, DidntRaiseException raise(" wasn't raised") )
+
+  if(raised == false) then (
+    messageToDisplay := " wasn't raised."
+    if (otherException != nil) then (
+      messageToDisplay := messageToDisplay .. " Another exception was raised instead - #{otherException type} \"#{otherException error}\"" interpolate
+    )
+  ) elseif (capturedMessage != expectedMessage) then (
+    messageToDisplay := " wasn't raised with the correct message - expected \"#{expectedMessage}\" but was \"#{capturedMessage}\"." interpolate
+  )
+  if (raised == false or capturedMessage != expectedMessage, DidntRaiseException raise(messageToDisplay))
 )

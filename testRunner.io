@@ -2,7 +2,7 @@ Object passedCount := 0
 Object failedCount := 0
 
 Object suite := method(
-codeUnderTest := call message argAt(0)
+  codeUnderTest := call message argAt(0)
   call sender doMessage(codeUnderTest)
   "" println
   "Tests : #{passedCount} passed, #{failedCount} failed." interpolate println
