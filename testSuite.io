@@ -12,6 +12,12 @@ TestSuite init := method(testSuiteCode, callingContext
 TestSuite run := method(
   callingContext doMessage(testSuiteCode)
 )
+TestSuite incrementPassed := method(
+  self passedCount = self passedCount + 1
+)
+TestSuite incrementFailed := method(
+  self failedCount = self failedCount + 1
+)
 
 TestCase := Object clone
 TestCase name := ""

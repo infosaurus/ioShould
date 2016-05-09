@@ -18,10 +18,10 @@ Object test := method(testName,
   printTestHeader(testCase name)
   testCase run
   if(testCase exception == nil) then (
-    self currentTestSuite passedCount = self currentTestSuite passedCount + 1
+    self currentTestSuite incrementPassed
     printSuccess
   ) else (
-    self currentTestSuite failedCount = self currentTestSuite failedCount + 1
+    self currentTestSuite incrementFailed
     printFailure(testCase exception)
   )
 )
