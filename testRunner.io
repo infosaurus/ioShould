@@ -22,7 +22,6 @@ Object test := method(testName,
   exception catch(Exception,
     failedCount = failedCount + 1
     "FAILED : #{exception type}" interpolate println
-    exception error println
     exception coroutine backTraceString println
   )
 )

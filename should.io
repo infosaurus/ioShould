@@ -1,5 +1,5 @@
 DidntRaiseException := Exception clone
-WasNotEqualException := Exception clone
+NotEqualException := Exception clone
 
 Block shouldRaise := method(exceptionType, expectedMessage,
   exception := try(self call)
@@ -19,4 +19,10 @@ Block shouldRaise := method(exceptionType, expectedMessage,
     messageToDisplay := " wasn't raised with the correct message - expected \"#{expectedMessage}\" but was \"#{capturedMessage}\"." interpolate
   )
   if (raised == false or capturedMessage != expectedMessage, DidntRaiseException raise(messageToDisplay))
+)
+
+Object shouldEqual := method(expectedValue,
+  if (self != expectedValue,
+    NotEqualException raise("#{expectedValue} is not equal to #{self}" interpolate)
+  )
 )
