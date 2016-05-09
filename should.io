@@ -24,12 +24,12 @@ Block shouldRaise := method(exceptionType, expectedMessage,
 
 Object shouldEqual := method(expectedValue,
   if (self != expectedValue,
-    NotEqualException raise("#{expectedValue} is not equal to #{self}" interpolate)
+    NotEqualException raise("#{expectedValue} should be equal to #{self} but is not." interpolate)
   )
 )
 
 Object shouldNotEqual := method(expectedValue,
   if (self == expectedValue,
-    EqualException raise("#{expectedValue} is equal to #{self}" interpolate)
+    EqualException raise("#{expectedValue} shouldn't be equal to #{self} but it is." interpolate)
   )
 )

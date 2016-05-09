@@ -1,8 +1,5 @@
 doFile("testSuite.io")
 
-Object passedCount := 0
-Object failedCount := 0
-
 Object suite := method(
   testSuiteCode := call message argAt(0)
   callingContext := call sender
@@ -16,11 +13,11 @@ Object test := method(testName,
   callingContext := call sender
   testCase := TestCase clone init(self currentTestSuite, testName, codeUnderTest, callingContext)
   printTestHeader(testCase name)
-  testCase run
-  if(testCase exception == nil) then (
+  exception := testCase run
+  if(exception == nil) then (
     printSuccess
   ) else (
-    printFailure(testCase exception)
+    printFailure(exception)
   )
 )
 

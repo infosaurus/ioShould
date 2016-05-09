@@ -24,7 +24,6 @@ TestCase suite := nil
 TestCase name := ""
 TestCase codeUnderTest := nil
 TestCase callingContext := nil
-TestCase exception := nil
 
 TestCase init := method(suite, testName, codeUnderTest, callingContext
   self suite := suite
@@ -37,9 +36,10 @@ TestCase run := method(
   exception := try(
     callingContext doMessage(codeUnderTest)
     suite incrementPassed
+    return nil
   )
   exception catch(Exception,
-    self exception = exception
     suite incrementFailed
+    return exception
   )
 )
