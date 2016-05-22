@@ -1,7 +1,7 @@
 doFile("testSuite.io")
 doFile("testOutput.io")
 
-Object suite := method(
+Lobby suite := method(
   self currentTestOutput := ConsoleTestOutput clone
   testSuiteCode := call message argAt(0)
   callingContext := call sender
@@ -10,7 +10,7 @@ Object suite := method(
   self currentTestOutput outputSuiteResults(self currentTestSuite passedCount, self currentTestSuite failedCount)
 )
 
-Object test := method(testName,
+Lobby test := method(testName,
   codeUnderTest := call message argAt(1)
   callingContext := call sender
   testCase := TestCase clone init(self currentTestSuite, testName, codeUnderTest, callingContext)
